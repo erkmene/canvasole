@@ -1,7 +1,8 @@
 const ctx = require("axel");
 
 //const brushes = ".░▒▓█";
-const brushes = ".,:;!|";
+// const brushes = ".,:;!|";
+const brushes = ".:oO0";
 // const brushes = " ";
 
 const Rain = function() {
@@ -19,7 +20,7 @@ Rain.prototype.createDrop = function() {
 }
 
 Rain.prototype.render = function() {
-	if (Math.random() < this.time / 10) {
+	if (Math.random() < this.time / 1000) {
 		this.createDrop();
 	}
 
@@ -40,7 +41,7 @@ const Drop = function($x, $y) {
 }
 
 Drop.prototype.nextBrush = function(n) {
-	return brushes[parseInt(n*brushes.length) % brushes.length];
+	return brushes[Math.min(parseInt(n*brushes.length), brushes.length - 1)];
 }
 
 Drop.prototype.render = function() {
@@ -56,7 +57,7 @@ Drop.prototype.render = function() {
 		parseInt(b * 200),
 		parseInt(b * 255)
 	);
-  ctx.brush = this.nextBrush((this.y - this.initY) / ctx.rows);
+  ctx.brush = this.nextBrush((this.y - this.initY + 3) / ctx.rows);
 	ctx.point(this.x, this.y);
 	ctx.cursor.restore();
 
